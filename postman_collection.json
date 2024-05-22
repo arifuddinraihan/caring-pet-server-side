@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "737aeac4-64d6-4a9a-a909-71d32b2d4339",
+		"name": "zz-as8-pet-adoption-site-vercel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26310834"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "user-register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Arif Raihan\",\r\n    \"email\": \"arifraihan@ar.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/register"
+					},
+					"response": []
+				},
+				{
+					"name": "user-login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"email\": \"arifraihan@ar.com\",\r\n   \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pets",
+			"item": [
+				{
+					"name": "Add a Pet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"DOGGO\",\r\n    \"species\": \"Dog\",\r\n    \"breed\": \"PUMBA\",\r\n    \"age\": 2,\r\n    \"size\": \"Small\",\r\n    \"location\": \"Khulna\",\r\n    \"description\": \"Max is a sweet and gentle Golden Retriever. He enjoys cuddling and playing with toys.\",\r\n    \"temperament\": \"Sweet Gentle\",\r\n    \"medicalHistory\": \"Up to date on vaccinations, neutered.\",\r\n    \"adoptionRequirements\": \"Max would do well in a home with a loving family and a yard to play in.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/pets"
+					},
+					"response": []
+				},
+				{
+					"name": "get-queried-pets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE"
+							}
+						],
+						"url": {
+							"raw": "https://as-8-pet-adoption-sql-server.vercel.app/api/pets",
+							"host": [
+								"https://as-8-pet-adoption-sql-server.vercel.app/api"
+							],
+							"path": [
+								"pets"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Age",
+									"disabled": true
+								},
+								{
+									"key": "species",
+									"value": "dog",
+									"disabled": true
+								},
+								{
+									"key": "breed",
+									"value": "Labrador",
+									"disabled": true
+								},
+								{
+									"key": "age",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "Large",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Shelter ABC",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "age",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "asc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pet profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"age\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/pets/91713bae-0c43-494d-a786-934df7d266fd"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Adoptions",
+			"item": [
+				{
+					"name": "Submit Adoption Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"petId\": \"91713bae-0c43-494d-a786-934df7d266fd\",\r\n    \"petOwnershipExperience\": \"Arif is owner\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/adoption-request"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Adoption Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE",
+								"type": "text"
+							}
+						],
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/adoption-requests"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Adoption Request Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"APPROVED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/adoption-requests/7d2d3f5f-70d5-4c45-adb6-8ba7815b085d"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User Information",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE"
+							}
+						],
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Information",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWZyYWloYW5AYXIuY29tIiwiaWF0IjoxNzE2MTY4MzAzLCJleHAiOjE3MTg3NjAzMDN9.P_m2echwGd3E3VW8TUmgXQgEduN-gkcj6R7b4iPaulE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Arif Raihan 02\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://as-8-pet-adoption-sql-server.vercel.app/api/profile"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://as-8-pet-adoption-sql-server.vercel.app/"
+			},
+			"response": []
+		}
+	]
+}
