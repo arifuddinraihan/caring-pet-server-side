@@ -6,6 +6,8 @@ import { IPaginationOptions } from "../../interface/pagination";
 import { paginationHelper } from "../../helper/paginationHelper";
 import { userSearchAbleFields } from "./user.constant";
 import { Prisma, UserRole, UserStatus } from "@prisma/client";
+import AppError from "../../errors/AppError";
+import httpStatus from "http-status";
 
 const getAllFromDB = async (params: any, options: IPaginationOptions) => {
   const { page, limit, skip } = paginationHelper.calculatePagination(options);
@@ -16,6 +18,12 @@ const getAllFromDB = async (params: any, options: IPaginationOptions) => {
   const andConditions: Prisma.UserWhereInput[] = [];
 
   //console.log(filterData);
+  // if (params) {
+  //   andConditions.push({
+  //     OR: [{ role: UserRole.ADMIN }, { role: UserRole.USER }],
+  //   });
+  // }
+
   if (params.searchTerm) {
     andConditions.push({
       OR: userSearchAbleFields.map((field) => ({
@@ -38,7 +46,9 @@ const getAllFromDB = async (params: any, options: IPaginationOptions) => {
   }
 
   const whereConditions: Prisma.UserWhereInput =
-    andConditions.length > 0 ? { AND: andConditions } : {};
+    andConditions.length > 0
+      ? { AND: andConditions }
+      : { OR: [{ role: UserRole.ADMIN }, { role: UserRole.USER }] };
 
   const result = await prisma.user.findMany({
     where: whereConditions,
@@ -170,12 +180,22 @@ const changeProfileStatusIntoDB = async (id: string, status: UserRole) => {
       id,
     },
     data: status,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      profilePhoto: true,
+      activeStatus: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
 
   return updateUserStatus;
 };
 
-const changeProfileRoleToAdminIntoDB = async (id: string, status: UserRole) => {
+const changeProfileRoleToAdminIntoDB = async (id: string) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
@@ -183,14 +203,44 @@ const changeProfileRoleToAdminIntoDB = async (id: string, status: UserRole) => {
     },
   });
 
-  const updateUserStatus = await prisma.user.update({
+  const adminData = await prisma.admin.findUnique({
     where: {
-      id,
+      email: userData.email,
     },
-    data: status,
   });
 
-  return updateUserStatus;
+  if (!adminData) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const createNewAdmin = await prisma.admin.create({
+      data: {
+        name: userData.name,
+        email: userData.email,
+      },
+    });
+
+    const updateUserStatus = await prisma.user.update({
+      where: {
+        id: userData.id,
+      },
+      data: {
+        role: UserRole.ADMIN,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        profilePhoto: true,
+        activeStatus: true,
+        createdAt: true,
+        updatedAt: true,
+        admin: true,
+      },
+    });
+
+    return updateUserStatus;
+  }
+  throw new AppError(httpStatus.BAD_REQUEST, "This user is already an Admin");
 };
 
 export const UserServices = {

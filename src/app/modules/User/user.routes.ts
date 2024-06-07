@@ -7,14 +7,8 @@ import { UserRole } from "@prisma/client";
 
 const router = express.Router();
 
-// router.get(
-//   "/",
-//   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-//   UserController.getUserProfile
-// );
-
 router.get(
-  "/",
+  "/all-users",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   UserController.getAllUsers
 );
@@ -25,11 +19,11 @@ router.get(
   UserController.getMyProfile
 );
 
-router.patch(
+router.put(
   "/update-my-profile",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  auth(UserRole.ADMIN, UserRole.USER),
   validateRequest(UserValidation.updateUser),
-  UserController.changeProfileStatus
+  UserController.updateCurrentUserProfile
 );
 
 router.put(
@@ -42,7 +36,6 @@ router.put(
 router.put(
   "/:id/create-admin",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  validateRequest(UserValidation.updateUserRole),
   UserController.changeProfileRoleToAdmin
 );
 

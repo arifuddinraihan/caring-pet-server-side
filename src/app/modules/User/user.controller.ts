@@ -70,10 +70,7 @@ const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
 const changeProfileRoleToAdmin = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const result = await UserServices.changeProfileRoleToAdminIntoDB(
-      id,
-      req.body
-    );
+    const result = await UserServices.changeProfileRoleToAdminIntoDB(id);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,

@@ -6,6 +6,18 @@ const createPet = z.object({
       required_error: "Name is required.",
       invalid_type_error: "Name must be string.",
     }),
+    petProfilePhoto: z.string({
+      required_error: "Pet Profile Photo is required.",
+      invalid_type_error: "Pet Profile Photo must be string.",
+    }),
+    morePetPhoto: z
+      .array(
+        z.string({
+          required_error: "More Pet Photo is required.",
+          invalid_type_error: "More Pet Photo must be string.",
+        })
+      )
+      .optional(),
     species: z.string({
       required_error: "Species is required.",
       invalid_type_error: "Species must be string.",
@@ -51,6 +63,20 @@ const updatePet = z.object({
       .string({
         invalid_type_error: "Name must be string.",
       })
+      .optional(),
+    petProfilePhoto: z
+      .string({
+        required_error: "Species is required.",
+        invalid_type_error: "Species must be string.",
+      })
+      .optional(),
+    morePetPhoto: z
+      .array(
+        z.string({
+          required_error: "Species is required.",
+          invalid_type_error: "Species must be string.",
+        })
+      )
       .optional(),
     species: z
       .string({

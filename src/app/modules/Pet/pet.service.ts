@@ -15,6 +15,29 @@ const createPetProfileIntoDB = async (req: Pet): Promise<Pet> => {
   return result;
 };
 
+const createManyPetProfilesIntoDB = async (req: Pet): Promise<Pet[]> => {
+  //   console.log(req);
+  const result = await prisma.$transaction(async (transactionClient) => {
+    const createdMultiplePetData = await transactionClient.pet.createManyAndReturn({
+      data: req,
+      skipDuplicates: true,
+    });
+    return createdMultiplePetData;
+  });
+  return result;
+};
+
+const getDemoPetsFromDB = async () => {
+  const result = await prisma.pet.findMany({
+    take: 3,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return result;
+};
+
 const getAllPetsFromDB = async (params: any, options: any) => {
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(options);
@@ -105,8 +128,31 @@ const updateSinglePetIntoDB = async (id: string, data: Partial<Pet>) => {
   return result;
 };
 
+const deleteSinglePetFromDB = async (id: string) => {
+  const result = await prisma.$transaction(async (transactionClient) => {
+    await transactionClient.pet.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    });
+
+    const removedPetData = await transactionClient.pet.delete({
+      where: {
+        id,
+      },
+    });
+
+    return removedPetData;
+  });
+
+  return result;
+};
+
 export const PetServices = {
   createPetProfileIntoDB,
+  createManyPetProfilesIntoDB,
+  getDemoPetsFromDB,
   getAllPetsFromDB,
   updateSinglePetIntoDB,
+  deleteSinglePetFromDB,
 };

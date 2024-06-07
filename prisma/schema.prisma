@@ -47,7 +47,7 @@ model Admin {
 model Pet {
   id                   String   @id @default(uuid())
   name                 String
-  petProfilePhoto      String?
+  petProfilePhoto      String
   morePetPhoto         String[]
   species              String
   breed                String
