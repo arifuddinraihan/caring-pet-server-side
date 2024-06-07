@@ -12,4 +12,9 @@ export default {
     refresh_token_secret: process.env.REFRESH_TOKEN_SECRET,
     refresh_token_expires_in: process.env.REFRESH_TOKEN_EXPIRES_IN,
   },
+  superAdmin : {
+    email : process.env.SUPER_ADMIN_EMAIL,
+    password : process.env.SUPER_ADMIN_PASSWORD,
+    image : process.env.SUPER_ADMIN_PROFILE_PHOTO,
+  }
 };

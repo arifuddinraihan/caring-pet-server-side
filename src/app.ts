@@ -16,6 +16,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
 // Server routes
 app.get("/", (req: Request, res: Response) => {
   res.send({

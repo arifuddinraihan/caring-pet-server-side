@@ -32,7 +32,25 @@ const updateUser = z.object({
   }),
 });
 
+const updateUserRole = z.object({
+  body: z.object({
+    role: z.string({
+      invalid_type_error: "Role must be string.",
+    }),
+  }),
+});
+
+const updateUserStatus = z.object({
+  body: z.object({
+    activeStatus: z.string({
+      invalid_type_error: "Status must be string.",
+    }),
+  }),
+});
+
 export const UserValidation = {
   createUser,
   updateUser,
+  updateUserRole,
+  updateUserStatus,
 };

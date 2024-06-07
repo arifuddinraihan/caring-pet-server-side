@@ -6,7 +6,7 @@ import AppError from "../errors/AppError";
 import { jwtHelpers } from "../helper/jwtHelper";
 import config from "../config";
 
-const auth = () => {
+const auth = (...roles: string[]) => {
   return async (
     req: Request & { user?: any },
     res: Response,
@@ -25,6 +25,10 @@ const auth = () => {
       );
 
       req.user = verifiedUser;
+
+      if (roles.length && !roles.includes(verifiedUser.role)) {
+        throw new AppError(httpStatus.FORBIDDEN, "Forbidden!");
+      }
 
       next();
     } catch (err) {
