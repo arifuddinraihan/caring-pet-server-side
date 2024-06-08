@@ -14,6 +14,7 @@ This repository contains the backend codebase responsible for handling server-si
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Scripts](#scripts)
+- [Documentations](#documentations)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
 - [License](#license)
@@ -41,13 +42,13 @@ This repository contains the backend codebase responsible for handling server-si
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Porgramming-Hero-web-course/l2-b2-fullstack-track-assignment-8-arifuddinraihan.git
+git clone https://github.com/arifuddinraihan/caring-pet-server-side.git
 ```
 
 2. Navigate to the project directory:
 
 ```
-cd l2-b2-fullstack-track-assignment-8-arifuddinraihan
+cd caring-pet-server-side
 ```
 
 3. Install dependencies:
@@ -73,16 +74,16 @@ Before you begin, ensure you have met the following `Dependencies` requirements:
 
 ```
 {
-  "@prisma/client": "^5.14.0",
-  "bcrypt": "^5.1.1",
-  "cookie-parser": "^1.4.6",
-  "cors": "^2.8.5",
-  "dotenv": "^16.4.5",
-  "express": "^4.19.2",
-  "http-status": "^1.7.4",
-  "jsonwebtoken": "^9.0.2",
-  "jwt-decode": "^4.0.0",
-  "zod": "^3.22.4"
+    "@prisma/client": "^5.15.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "http-status": "^1.7.4",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "zod": "^3.22.4"
 }
 ```
 
@@ -129,11 +130,16 @@ Before you begin, ensure you have met the following `Development Dependencies` r
 Set up the environment variables by creating a `.env` file and filling in the required variables based on the provided `.env.example` file.
 
 ```
-DATABASE_URL= your_mongodb_connection_string
-PORT= your_preferred_port
-BCRYPT_SALT_ROUNDS= your_preferred_bcrypt_salt_rounds
-JWT_ACCESS_SECRET= your_preferred_jwt_access_secret
-JWT_ACCESS_EXPIRES_IN= your_preferred_jwt_access_expires_in
+DATABASE_URL=your_sql_server_connection_string
+PORT=your_preferred_port
+BCRYPT_SALT_ROUNDS=your_preferred_bcrypt_salt_rounds
+JWT_SECRET=your_preferred_jwt_secret
+EXPIRES_IN=your_preferred_expires_in
+REFRESH_TOKEN_SECRET=your_preferred_jwt_access_secret
+REFRESH_TOKEN_EXPIRES_IN=your_preferred_jwt_access_expires_in
+SUPER_ADMIN_EMAIL=your_preferred_superAdmin_email
+SUPER_ADMIN_PASSWORD=your_preferred_superAdmin_password
+SUPER_ADMIN_PROFILE_PHOTO=your_preferred_superAdmin_photo
 ```
 
 Please note : If you want to add any environment variables, make sure you update the `.\src\app\config\index.ts` for the added variable
@@ -164,6 +170,31 @@ To run the application in production mode:
 npm run start
 npm run start:prod
 ```
+
+## Documentations
+
+Here is the Demo Live Client Link related with this application, deployed in Netlify
+
+```
+https://l2b2a6-shoe-mgmt-client-by-arif.netlify.app/login
+```
+
+Here is the super admin, admin and user login credentials to login to application. Follow the credentials below:
+
+- Super Admin Login:
+
+  - Username: [ superadmin@caringpet.com ]
+  - Password: [ superadmin123 ]
+
+- Admin Login:
+
+  - Username: [ admin1@gmail.com ]
+  - Password: [ asd123 ]
+
+- User Login:
+
+  - Username: [ user1@gmail.com ]
+  - Password: [ asd123 ]
 
 ## Scripts
 
@@ -237,17 +268,27 @@ https://as-8-pet-adoption-sql-server.vercel.app
 
 ### Get User Information:
 
-##### Endpoint: GET `/api/profile`
+##### Endpoint: GET `/api/profile/me`
 
 - Requires JWT token
-- Retrieves the user's profile information.
+- Retrieves the logged in user's profile information.
 
 ### Update User Information:
 
-##### Endpoint: PUT `/api/profile`
+##### Endpoint: PUT `/api/profile/update-my-profile`
 
 - Requires JWT token
 - Allows updating the user's profile information.
+
+##### Endpoint: PUT `/api/profile/:id/status`
+
+- Requires JWT token
+- Allows ADMIN to update the user's profile active status.
+
+##### Endpoint: PUT `/api/profile/:id/create-admin`
+
+- Requires JWT token
+- Allows ADMIN to update the user's profile to admin role.
 
 ## Contributing
 
