@@ -12,12 +12,13 @@ const seedSuperAdmin = async () => {
     });
 
     if (isExistSuperAdmin) {
-      console.log("Super admin already exists!");
+      // console.log("Super admin already exists!");
       return;
     }
 
     const hashedPassword = await bcrypt.hash(config.superAdmin.password!, 12);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const superAdminData = await prisma.user.create({
       data: {
         name: "Super Admin",
@@ -33,7 +34,7 @@ const seedSuperAdmin = async () => {
       },
     });
 
-    console.log("Super Admin Created Successfully!", superAdminData);
+    // console.log("Super Admin Created Successfully!", superAdminData);
   } catch (err) {
     console.error(err);
   } finally {
