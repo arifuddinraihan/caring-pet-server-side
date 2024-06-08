@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import bcrypt from "bcrypt";
 import { Request } from "express";
 import { IAuthUser } from "../../interface/common";
 import prisma from "../../shared/prisma";
@@ -8,6 +9,7 @@ import { userSearchAbleFields } from "./user.constant";
 import { Prisma, UserRole, UserStatus } from "@prisma/client";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
+import { UserUtils } from "./user.utils";
 
 const getAllFromDB = async (params: any, options: IPaginationOptions) => {
   const { page, limit, skip } = paginationHelper.calculatePagination(options);
@@ -167,6 +169,51 @@ const updateMyProfileIntoDB = async (user: IAuthUser, req: Request) => {
   return { ...profileInfo };
 };
 
+const updateMyPasswordIntoDB = async (user: IAuthUser, req: Request) => {
+  const { currentPassword, newPassword } = req.body;
+
+  const isUserExist = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: user?.email,
+      activeStatus: UserStatus.ACTIVE,
+    },
+  });
+
+  if (!isUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User does not exist");
+  }
+
+  // checking old password
+  if (
+    isUserExist.password &&
+    !(await UserUtils.comparePasswords(currentPassword, isUserExist.password))
+  ) {
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      "Current Password is incorrect"
+    );
+  }
+
+  const hashedPassword: string = await bcrypt.hash(newPassword, 12);
+
+  const profileInfo = await prisma.user.update({
+    where: {
+      id: isUserExist.id,
+    },
+    data: {
+      password: hashedPassword,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      updatedAt: true,
+    },
+  });
+
+  return profileInfo;
+};
+
 const changeProfileStatusIntoDB = async (id: string, status: UserRole) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const userData = await prisma.user.findUniqueOrThrow({
@@ -247,6 +294,7 @@ export const UserServices = {
   getAllFromDB,
   getMyProfileFromDB,
   updateMyProfileIntoDB,
+  updateMyPasswordIntoDB,
   changeProfileStatusIntoDB,
   changeProfileRoleToAdminIntoDB,
 };

@@ -55,6 +55,23 @@ const updateCurrentUserProfile = catchAsync(
   }
 );
 
+const updateCurrentUserPassword = catchAsync(
+  async (req: Request & { user?: IAuthUser }, res: Response) => {
+    const user = req.user;
+    const result = await UserServices.updateMyPasswordIntoDB(
+      user as IAuthUser,
+      req
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Your password updated successfully!",
+      data: result,
+    });
+  }
+);
+
 const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await UserServices.changeProfileStatusIntoDB(id, req.body);
@@ -85,6 +102,7 @@ export const UserController = {
   getAllUsers,
   getMyProfile,
   updateCurrentUserProfile,
+  updateCurrentUserPassword,
   changeProfileStatus,
   changeProfileRoleToAdmin,
 };

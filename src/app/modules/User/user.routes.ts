@@ -27,6 +27,13 @@ router.put(
 );
 
 router.put(
+  "/change-password",
+  auth(UserRole.USER),
+  validateRequest(UserValidation.changeUserPassword),
+  UserController.updateCurrentUserPassword
+);
+
+router.put(
   "/:id/status",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   validateRequest(UserValidation.updateUserStatus),

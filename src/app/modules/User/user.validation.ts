@@ -32,6 +32,17 @@ const updateUser = z.object({
   }),
 });
 
+const changeUserPassword = z.object({
+  body: z.object({
+    currentPassword: z.string({
+      invalid_type_error: "Current Password must be string.",
+    }),
+    newPassword: z.string({
+      invalid_type_error: "New Password must be string.",
+    }),
+  }),
+});
+
 const updateUserRole = z.object({
   body: z.object({
     role: z.string({
@@ -51,6 +62,7 @@ const updateUserStatus = z.object({
 export const UserValidation = {
   createUser,
   updateUser,
+  changeUserPassword,
   updateUserRole,
   updateUserStatus,
 };
