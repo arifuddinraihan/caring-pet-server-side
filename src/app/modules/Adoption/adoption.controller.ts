@@ -32,6 +32,21 @@ const getAllAdoptions = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getUserAdoptionRequests = catchAsync(
+  async (req: Request, res: Response) => {
+    const { userId } = req.params;
+
+    const result = await AdoptionServices.getUserAdoptionsFromDB(userId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Adoption requests for user has retrieved successfully",
+      data: result,
+    });
+  }
+);
+
 const updateAdoptionRequestStatus = catchAsync(
   async (req: Request, res: Response) => {
     const { requestId } = req.params;
@@ -53,5 +68,6 @@ const updateAdoptionRequestStatus = catchAsync(
 export const AdoptionController = {
   createAdoptionRequest,
   getAllAdoptions,
+  getUserAdoptionRequests,
   updateAdoptionRequestStatus,
 };

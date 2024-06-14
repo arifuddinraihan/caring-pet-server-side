@@ -51,6 +51,24 @@ const getAllAdoptionsFromDB = async () => {
   return quiredAdoptionRequestsData;
 };
 
+const getUserAdoptionsFromDB = async (id: string) => {
+  const userAdoptionRequestsData = await prisma.adoptionRequest.findMany({
+    where: {
+      userId: id,
+    },
+    select: {
+      userId: true,
+      petId: true,
+      pet: true,
+      status: true,
+      createdAt: true,
+      petOwnershipExperience: true,
+    },
+  });
+
+  return userAdoptionRequestsData;
+};
+
 const updateAdoptionRequestStatusIntoDB = async (
   id: string,
   data: Partial<AdoptionRequest>
@@ -79,5 +97,6 @@ const updateAdoptionRequestStatusIntoDB = async (
 export const AdoptionServices = {
   AddAdoptionRequestIntoDB,
   getAllAdoptionsFromDB,
+  getUserAdoptionsFromDB,
   updateAdoptionRequestStatusIntoDB,
 };
