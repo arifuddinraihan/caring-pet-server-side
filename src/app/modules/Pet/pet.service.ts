@@ -18,10 +18,11 @@ const createPetProfileIntoDB = async (req: Pet): Promise<Pet> => {
 const createManyPetProfilesIntoDB = async (req: Pet): Promise<Pet[]> => {
   //   console.log(req);
   const result = await prisma.$transaction(async (transactionClient) => {
-    const createdMultiplePetData = await transactionClient.pet.createManyAndReturn({
-      data: req,
-      skipDuplicates: true,
-    });
+    const createdMultiplePetData =
+      await transactionClient.pet.createManyAndReturn({
+        data: req,
+        skipDuplicates: true,
+      });
     return createdMultiplePetData;
   });
   return result;
@@ -107,6 +108,16 @@ const getAllPetsFromDB = async (params: any, options: any) => {
   };
 };
 
+const getSinglePetIntoDB = async (id: string) => {
+  const result = await prisma.pet.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  return result;
+};
+
 const updateSinglePetIntoDB = async (id: string, data: Partial<Pet>) => {
   const result = await prisma.$transaction(async (transactionClient) => {
     await transactionClient.pet.findUniqueOrThrow({
@@ -153,6 +164,7 @@ export const PetServices = {
   createManyPetProfilesIntoDB,
   getDemoPetsFromDB,
   getAllPetsFromDB,
+  getSinglePetIntoDB,
   updateSinglePetIntoDB,
   deleteSinglePetFromDB,
 };

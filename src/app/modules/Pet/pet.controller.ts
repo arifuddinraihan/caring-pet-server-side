@@ -56,6 +56,19 @@ const getAllPets = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSinglePet = catchAsync(async (req: Request, res: Response) => {
+  const { petId } = req.params;
+
+  const result = await PetServices.getSinglePetIntoDB(petId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Pet profile retrieved successfully!",
+    data: result,
+  });
+});
+
 const updateSinglePet = catchAsync(async (req: Request, res: Response) => {
   const { petId } = req.params;
 
@@ -87,6 +100,7 @@ export const PetController = {
   createManyPetProfiles,
   getDemoPets,
   getAllPets,
+  getSinglePet,
   updateSinglePet,
   deleteSinglePet,
 };

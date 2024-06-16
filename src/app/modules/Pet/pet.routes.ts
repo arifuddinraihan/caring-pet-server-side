@@ -28,6 +28,12 @@ router.get(
   PetController.getAllPets
 );
 
+router.get(
+  "/:petId",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  PetController.getSinglePet
+);
+
 router.put(
   "/:petId",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
